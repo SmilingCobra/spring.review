@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xmlns:context="http://www.springframework.org/schema/context"
+xmlns:tx="http://www.springframework.org/schema/tx"
+xmlns:aop="http://www.springframework.org/schema/aop"
+xsi:schemaLocation="http://www.springframework.org/schema/beans
+               http://www.springframework.org/schema/beans/spring-beans.xsd
+               http://www.springframework.org/schema/context
+               http://www.springframework.org/schema/context/spring-context.xsd 
+               http://www.springframework.org/schema/tx
+               http://www.springframework.org/schema/tx/spring-tx.xsd
+               http://www.springframework.org/schema/aop
+               http://www.springframework.org/schema/aop/spring-aop.xsd
+               ">
+
+<context:property-placeholder location="DB.properties"/>        
+<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+         <property name="driverClassName" value="${mysql_driver}"></property>
+         <property name="url" value="${mysql_url}"></property>
+         <property name="password" value="${mysql_password}"></property>
+         <property name="username" value="${mysql_user}"></property>
+</bean>
+
+<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+   		<property name="dataSource" ref="dataSource"></property>
+</bean>  
+    
+<bean id="stuCardDao" class="com.xt.spring.context.jdbc.dao.UserDaoJDBC">
+       <property name="jdbcTemplate" ref="jdbcTemplate"></property>
+</bean>
+<!-- 事务管理配置 -->
+<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	<property name="dataSource" ref="dataSource"></property>
+</bean>
+  
+         </beans>

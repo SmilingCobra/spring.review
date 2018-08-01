@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+               http://www.springframework.org/schema/beans/spring-beans.xsd
+               http://www.springframework.org/schema/context
+               http://www.springframework.org/schema/context/spring-context.xsd 
+               http://www.springframework.org/schema/tx
+               http://www.springframework.org/schema/tx/spring-tx.xsd
+               http://www.springframework.org/schema/aop
+               http://www.springframework.org/schema/aop/spring-aop.xsd
+               
+               ">
+
+	<!-- 通过import标签引入文件 -->
+	<import resource="applicationContextJDBC.xml" />
+
+
+
+
+
+
+
+
+
+
+	<bean id="stuDaoImpl" class="com.xt.spring.context.transaction.xml.StuDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"></property>
+	</bean>
+	<bean id="stuCardService" class="com.xt.spring.context.transaction.xml.StuCardService">
+		<property name="scd" ref="stuDaoImpl"></property>
+	</bean>
+	
+	<!-- 事务的传播行为需要依赖事务管理器 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<!-- 事务的属性信息 -->
+		<tx:attributes>
+			<tx:method name="transferAccount" propagation="REQUIRED"/>
+		
+		</tx:attributes>
+	
+	</tx:advice>
+	
+	<aop:config>
+		<aop:pointcut expression="execution(* com.xt.spring.context.transaction.xml.StuCardService.*(..))" id="stuCardService-pointcut"/>
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="stuCardService-pointcut"/>
+	
+	</aop:config>
+</beans>

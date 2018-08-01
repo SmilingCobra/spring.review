@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xmlns:context="http://www.springframework.org/schema/context"
+xsi:schemaLocation="http://www.springframework.org/schema/beans
+               http://www.springframework.org/schema/beans/spring-beans.xsd
+               http://www.springframework.org/schema/context
+               http://www.springframework.org/schema/context/spring-context.xsd ">
+               <bean id="stuXml" class="com.xt.spring.context.xml.entity.Student">
+               <constructor-arg name="stuName" value="小强"></constructor-arg>
+               <constructor-arg name="gender" value="男"></constructor-arg>
+               <constructor-arg name="age" value="20"></constructor-arg>
+               </bean>
+               <!-- private String collName;
+					private List list;
+					private Map map;
+					private Set set; -->
+               <bean id="collXml" class="com.xt.spring.context.xml.entity.College">
+               <property name="collName" value="郑州大学"></property>
+               <property name="list">
+               <list>
+               <value>小明</value>
+               <value>小强</value>
+               <value>小张</value>
+               </list>
+               </property>
+               <property name="set">
+               <set>
+               <value>小明</value>
+               <value>小强</value>
+               <value>小张</value>
+               </set>
+               </property>
+               <property name="map">
+               <map >
+               <entry key="1" value="小明"></entry>
+               <entry key="2" value="小张"></entry>
+               <entry key="3" value="小王"></entry>
+               </map>
+               </property>
+               </bean>
+               </beans>
